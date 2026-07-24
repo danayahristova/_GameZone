@@ -1,4 +1,5 @@
 using GameZone.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameZone
 {
@@ -15,7 +16,12 @@ namespace GameZone
 
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<GameZoneDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
             var app = builder.Build();
+
+            
 
             if (app.Environment.IsDevelopment())
             {
@@ -31,7 +37,7 @@ namespace GameZone
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
