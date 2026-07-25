@@ -35,6 +35,8 @@ namespace GameZone.Controllers
             var model = new GameAddViewModel
             {
                 Genres = genres
+                    .Select(g => new GenreViewModel { Id = g.Id, Name = g.Name })
+                    .ToList()
             };
             return View(model);
         }
@@ -43,7 +45,13 @@ namespace GameZone.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Genres = _context.Genres.ToList();
+                model.Genres = _context.Genres
+                    .Select(g => new GenreViewModel 
+                        { 
+                            Id = g.Id,
+                            Name = g.Name 
+                    }).ToList();
+
                 return View(model);
             }
             var game = new Game
@@ -58,6 +66,24 @@ namespace GameZone.Controllers
             _context.Games.Add(game);
             _context.SaveChanges();
             return RedirectToAction("All");
+        }
+        public IActionResult Details(int id)
+        {
+            var game = _context.Games
+                .Select(g => new GameDetailsViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Description = g.Description,
+                    ImageUrl = g.ImageUrl,
+                    Publisher = g.PublisherName,
+                    ReleasedOn = g.ReleasedOn,
+                    GenreId = g.GenreId,
+                    Genre = g.Genre.Name
+                })
+                .FirstOrDefault(g => g.Id == id);
+
+            return game is not null ? View(game) : NotFound();
         }
     }
 }
