@@ -6,7 +6,7 @@ namespace GameZone.ViewModels
 {
     public class GameViewModel
     {
-        [Key]
+
         public int Id { get; set; }
 
         [Required]
@@ -26,7 +26,6 @@ namespace GameZone.ViewModels
         [Required]
         public int GenreId { get; set; }
 
-        [ForeignKey(nameof(GenreId))]
-        public Genre Genre{ get; set; } = null!;
+        public GenreViewModel Genre{ get; set; } = null!;
     }
 }

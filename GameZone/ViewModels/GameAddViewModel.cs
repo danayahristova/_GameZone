@@ -22,6 +22,6 @@ namespace GameZone.ViewModels
 
         [Required]
         public int GenreId { get; set; }
-        public List<Genre> Genres { get; set; } = new List<Genre>();
+        public List<GenreViewModel> Genres { get; set; } = new List<GenreViewModel>();
     }
 }
