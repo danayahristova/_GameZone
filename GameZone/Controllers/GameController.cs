@@ -16,7 +16,7 @@ namespace GameZone.Controllers
         public IActionResult All()
         {
             var games = _context.Games
-                .Select(g => new GameViewModel
+                .Select(g => new GameListViewModel
                 {
                     Id = g.Id,
                     Title = g.Title,

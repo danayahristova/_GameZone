@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameZone.ViewModels
 {
-    public class GameViewModel
+    public class GameListViewModel
     {
 
         public int Id { get; set; }
