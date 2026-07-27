@@ -85,5 +85,53 @@ namespace GameZone.Controllers
 
             return game is not null ? View(game) : NotFound();
         }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var game = _context.Games
+                
+                .Select(g => new GameEditViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title,
+                    Description = g.Description,
+                    ImageUrl = g.ImageUrl,
+                    PublisherName = g.PublisherName,
+                    ReleasedOn = g.ReleasedOn,
+                    GenreId = g.GenreId
+                })
+                .FirstOrDefault(g => g.Id == id);
+            game.Genres = _context.Genres
+                .Select(g => new GenreViewModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                }).ToList();
+
+            return game is not null ? View(game) : NotFound();
+        }
+        [HttpPost]
+        public IActionResult Edit(GameEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var game = _context.Games.Find(model.Id);
+            if (game is null)
+            {
+                return NotFound();
+            }
+            game.Title = model.Title;
+            game.Description = model.Description;
+            game.ImageUrl = model.ImageUrl;
+            game.PublisherName = model.PublisherName;
+            game.ReleasedOn = model.ReleasedOn;
+            game.GenreId = model.GenreId;
+            _context.SaveChanges();
+
+            return RedirectToAction("All");
+        }
+        
     }
 }
