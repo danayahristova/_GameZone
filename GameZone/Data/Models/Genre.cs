@@ -9,6 +9,8 @@ namespace GameZone.Data.Models
         public int Id { get; set; }
 
         [Required]
+        [MinLength(ValidationConstants.GenreNameMinLength)]
+        [MaxLength(ValidationConstants.GenreNameMaxLength)]
         public string Name { get; set; } = null!;
 
         public virtual ICollection<Game> Games { get; set; } = new HashSet<Game>();
