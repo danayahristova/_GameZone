@@ -132,6 +132,29 @@ namespace GameZone.Controllers
 
             return RedirectToAction("All");
         }
-        
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var game = _context.Games
+                .Select(g => new GameDeleteViewModel
+                {
+                    Id = g.Id,
+                    Title = g.Title
+                })
+                .FirstOrDefault(g => g.Id == id);
+            return game is not null ? View(game) : NotFound();
+        }
+        [HttpPost]
+        public IActionResult Delete(GameDeleteViewModel model)
+        {
+            var game = _context.Games.Find(model.Id);
+            if (game is null)
+            {
+                return NotFound();
+            }
+            _context.Games.Remove(game);
+            _context.SaveChanges();
+            return RedirectToAction("All");
+        }
     }
 }
