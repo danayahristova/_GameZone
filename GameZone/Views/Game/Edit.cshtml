@@ -36,10 +36,8 @@
 
             <div class="mb-3">
                 <label asp-for="ReleasedOn" class="form-label-add-edit">Released On</label>
-                <input asp-for="ReleasedOn"
-                       class="form-control"
-                       aria-required="true"
-                       value="@(string.IsNullOrEmpty(Model.ReleasedOn.ToString("yyyy-MM-dd")) ? today : Model.ReleasedOn.ToString("yyyy-MM-dd")) "/>     
+                <input asp-for="ReleasedOn" class="form-control" aria-required="true"/>
+     
                 <span asp-validation-for="ReleasedOn" class="text-danger"></span>
             </div>
 
